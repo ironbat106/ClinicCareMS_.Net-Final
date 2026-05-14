@@ -1,0 +1,49 @@
+﻿@model AppointmentReportDTO
+@{
+    ViewData["Title"] = "Appointment Report";
+}
+ 
+<h2>Appointment Report</h2>
+ 
+<form method="get" class="row mb-3">
+    <div class="col-md-3">
+        <label>From Date</label>
+        <input type="date" name="fromDate" value="@Model.FromDate.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label>To Date</label>
+        <input type="date" name="toDate" value="@Model.ToDate.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-md-3 mt-4">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+ 
+<div class="alert alert-info">
+    Total: @Model.TotalAppointments |
+    Pending: @Model.Pending |
+    Confirmed: @Model.Confirmed |
+    Completed: @Model.Completed |
+    Cancelled: @Model.Cancelled |
+    Completed Fee: @Model.TotalCompletedFee
+</div>
+ 
+<table class="table table-bordered">
+    <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Fee</th>
+    </tr>
+    @foreach (var item in Model.Appointments)
+    {
+        <tr>
+            <td>@item.PatientName</td>
+            <td>@item.DoctorName</td>
+            <td>@item.AppointmentDate</td>
+            <td>@item.Status</td>
+            <td>@item.Fee</td>
+        </tr>
+    }
+</table>

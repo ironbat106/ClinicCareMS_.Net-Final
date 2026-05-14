@@ -1,0 +1,51 @@
+﻿@model List<AppointmentDTO>
+@{
+    ViewData["Title"] = "Appointments";
+}
+ 
+<h2>Appointments</h2>
+<a asp-action="Create" class="btn btn-primary mb-2">Create Appointment</a>
+ 
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Fee</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.PatientName</td>
+            <td>@item.DoctorName</td>
+            <td>@item.AppointmentDate</td>
+            <td>@item.Reason</td>
+            <td>@item.Status</td>
+            <td>@item.Fee</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                <br />
+                <form asp-action="ChangeStatus" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@item.AppointmentId" />
+                    <input type="hidden" name="status" value="Confirmed" />
+                    <button class="btn btn-sm btn-outline-primary" type="submit">Confirm</button>
+                </form>
+                <form asp-action="ChangeStatus" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@item.AppointmentId" />
+                    <input type="hidden" name="status" value="Completed" />
+                    <button class="btn btn-sm btn-outline-success" type="submit">Complete</button>
+                </form>
+                <form asp-action="ChangeStatus" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@item.AppointmentId" />
+                    <input type="hidden" name="status" value="Cancelled" />
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Cancel</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

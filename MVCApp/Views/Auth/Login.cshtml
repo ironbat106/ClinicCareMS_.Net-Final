@@ -1,0 +1,32 @@
+﻿@model BLL.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form asp-action="Login" method="post" class="col-md-5">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+    <a asp-action="Registration" class="btn btn-secondary">Register</a>
+</form>
+
+<p class="mt-3">Default login after MD5 update: admin / 1234</p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

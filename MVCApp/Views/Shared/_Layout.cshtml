@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ClinicCareMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">ClinicCareMS</a>
+            <div class="navbar-nav">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">Dashboard</a>
+                <a class="nav-link" asp-controller="Patients" asp-action="Index">Patients</a>
+                <a class="nav-link" asp-controller="Appointments" asp-action="Index">Appointments</a>
+                <a class="nav-link" asp-controller="Reports" asp-action="AppointmentReport">Report</a>
+                <a class="nav-link" asp-controller="Reports" asp-action="DoctorSchedule">Doctor Schedule</a>
+                <a class="nav-link" asp-controller="Reports" asp-action="OverdueAlerts">Overdue Alerts</a>
+                @if (Context.Session.GetString("Role") == "Admin")
+                {
+                    <a class="nav-link" asp-controller="Doctors" asp-action="Index">Doctors</a>
+                }
+            </div>
+            <div class="navbar-nav ms-auto">
+                @if (Context.Session.GetString("UserName") != null)
+                {
+                    <span class="navbar-text me-2">@Context.Session.GetString("UserName") (@Context.Session.GetString("Role"))</span>
+                    <a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a>
+                }
+            </div>
+        </div>
+    </nav>
+ 
+    <div class="container">
+        @if (TempData["Msg"] != null)
+        {
+            <div class="alert alert-success">@TempData["Msg"]</div>
+        }
+        @if (TempData["Err"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Err"]</div>
+        }
+        @RenderBody()
+    </div>
+ 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿@model DashboardDTO
+@{
+    ViewData["Title"] = "Dashboard";
+}
+ 
+<h2>Dashboard</h2>
+ 
+<div class="row mb-3">
+    <div class="col-md-3"><div class="alert alert-info">Doctors: @Model.TotalDoctors</div></div>
+    <div class="col-md-3"><div class="alert alert-info">Patients: @Model.TotalPatients</div></div>
+    <div class="col-md-3"><div class="alert alert-info">Today: @Model.TodayAppointments</div></div>
+    <div class="col-md-3"><div class="alert alert-danger">Overdue: @Model.OverdueAppointments</div></div>
+</div>
+ 
+<h4>Today's Appointments</h4>
+<table class="table table-bordered">
+    <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var item in Model.TodayList)
+    {
+        <tr>
+            <td>@item.PatientName</td>
+            <td>@item.DoctorName</td>
+            <td>@item.AppointmentDate</td>
+            <td>@item.Status</td>
+        </tr>
+    }
+</table>

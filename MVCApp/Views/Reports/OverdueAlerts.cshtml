@@ -1,0 +1,26 @@
+﻿@model List<AppointmentDTO>
+@{
+    ViewData["Title"] = "Overdue Alerts";
+}
+ 
+<h2>Overdue Appointment Alerts</h2>
+ 
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.PatientName</td>
+            <td>@item.DoctorName</td>
+            <td>@item.AppointmentDate</td>
+            <td>@item.Reason</td>
+            <td>@item.Status</td>
+        </tr>
+    }
+</table>

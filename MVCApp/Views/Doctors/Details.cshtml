@@ -1,0 +1,12 @@
+﻿@model DoctorDTO
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+ 
+<h2>Doctor Details</h2>
+<p><b>Name:</b> @Model.Name</p>
+<p><b>Specialization:</b> @Model.Specialization</p>
+<p><b>Phone:</b> @Model.Phone</p>
+<p><b>Email:</b> @Model.Email</p>
+<p><b>Active:</b> @Model.IsActive</p>
+<a asp-action="Index" class="btn btn-secondary">Back</a>

@@ -1,0 +1,40 @@
+﻿@model List<AppointmentDTO>
+@{
+    ViewData["Title"] = "Doctor Schedule";
+}
+ 
+<h2>Doctor Schedule</h2>
+ 
+<form method="get" class="row mb-3">
+    <div class="col-md-4">
+        <label>Doctor</label>
+        <select name="doctorId" asp-items="ViewBag.DoctorId" class="form-control">
+            <option value="">-- Select Doctor --</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label>Date</label>
+        <input type="date" name="date" value="@ViewBag.SelectedDate" class="form-control" />
+    </div>
+    <div class="col-md-3 mt-4">
+        <button type="submit" class="btn btn-primary">Show</button>
+    </div>
+</form>
+ 
+<table class="table table-bordered">
+    <tr>
+        <th>Patient</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.PatientName</td>
+            <td>@item.AppointmentDate</td>
+            <td>@item.Reason</td>
+            <td>@item.Status</td>
+        </tr>
+    }
+</table>

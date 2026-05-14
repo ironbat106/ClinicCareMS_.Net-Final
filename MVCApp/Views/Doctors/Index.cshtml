@@ -1,0 +1,33 @@
+﻿@model List<DoctorDTO>
+@{
+    ViewData["Title"] = "Doctors";
+}
+ 
+<h2>Doctors</h2>
+<a asp-action="Create" class="btn btn-primary mb-2">Create Doctor</a>
+ 
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Specialization</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Active</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Specialization</td>
+            <td>@item.Phone</td>
+            <td>@item.Email</td>
+            <td>@item.IsActive</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.DoctorId">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.DoctorId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.DoctorId">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
