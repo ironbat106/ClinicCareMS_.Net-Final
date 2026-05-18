@@ -28,35 +28,42 @@ namespace BLL.Services
         public List<AppointmentDTO> Get()
         {
             var data = appointmentRepo.Get();
-            return mapper.Map<List<AppointmentDTO>>(data);
+            var res = mapper.Map<List<AppointmentDTO>>(data);
+            return res;
         }
 
         public AppointmentDTO? Get(int id)
         {
             var data = appointmentRepo.Get(id);
-            return mapper.Map<AppointmentDTO>(data);
+            var res = mapper.Map<AppointmentDTO>(data);
+            return res;
         }
 
         public bool Create(AppointmentDTO dto)
         {
             CheckAppointment(dto, null);
+
             dto.Status = "Pending";
             dto.CreatedAt = DateTime.Now;
 
             var data = mapper.Map<Appointment>(dto);
-            return appointmentRepo.Create(data);
+            var res = appointmentRepo.Create(data);
+            return res;
         }
 
         public bool Update(AppointmentDTO dto)
         {
             CheckAppointment(dto, dto.AppointmentId);
+
             var data = mapper.Map<Appointment>(dto);
-            return appointmentRepo.Update(data);
+            var res = appointmentRepo.Update(data);
+            return res;
         }
 
         public bool Delete(int id)
         {
-            return appointmentRepo.Delete(id);
+            var res = appointmentRepo.Delete(id);
+            return res;
         }
 
         public bool ChangeStatus(int id, string status)
@@ -65,7 +72,9 @@ namespace BLL.Services
             {
                 throw new Exception("Invalid appointment status.");
             }
-            return appointmentRepo.ChangeStatus(id, status);
+
+            var res = appointmentRepo.ChangeStatus(id, status);
+            return res;
         }
 
         public AppointmentReportDTO GetReport(DateTime? fromDate, DateTime? toDate)
@@ -74,47 +83,50 @@ namespace BLL.Services
             var to = (toDate ?? DateTime.Today).Date.AddDays(1).AddTicks(-1);
 
             var data = appointmentRepo.GetByDateRange(from, to);
-            var dtoList = mapper.Map<List<AppointmentDTO>>(data);
+            var res = mapper.Map<List<AppointmentDTO>>(data);
 
-            return new AppointmentReportDTO
-            {
-                FromDate = from,
-                ToDate = to.Date,
-                TotalAppointments = data.Count,
-                Pending = data.Count(a => a.Status == "Pending"),
-                Confirmed = data.Count(a => a.Status == "Confirmed"),
-                Completed = data.Count(a => a.Status == "Completed"),
-                Cancelled = data.Count(a => a.Status == "Cancelled"),
-                TotalCompletedFee = data.Where(a => a.Status == "Completed").Sum(a => a.Fee),
-                Appointments = dtoList
-            };
+            var report = new AppointmentReportDTO();
+            report.FromDate = from;
+            report.ToDate = to.Date;
+            report.TotalAppointments = data.Count;
+            report.Pending = data.Count(a => a.Status == "Pending");
+            report.Confirmed = data.Count(a => a.Status == "Confirmed");
+            report.Completed = data.Count(a => a.Status == "Completed");
+            report.Cancelled = data.Count(a => a.Status == "Cancelled");
+            report.TotalCompletedFee = data.Where(a => a.Status == "Completed").Sum(a => a.Fee);
+            report.Appointments = res;
+
+            return report;
         }
 
         public List<AppointmentDTO> GetDoctorSchedule(int doctorId, DateTime date)
         {
             var data = appointmentRepo.GetDoctorSchedule(doctorId, date);
-            return mapper.Map<List<AppointmentDTO>>(data);
+            var res = mapper.Map<List<AppointmentDTO>>(data);
+            return res;
         }
 
         public List<AppointmentDTO> GetOverdueAlerts()
         {
             var data = appointmentRepo.GetOverdueAlerts();
-            return mapper.Map<List<AppointmentDTO>>(data);
+            var res = mapper.Map<List<AppointmentDTO>>(data);
+            return res;
         }
 
         public DashboardDTO GetDashboard()
         {
             var today = appointmentRepo.GetByDateRange(DateTime.Today, DateTime.Today.AddDays(1).AddTicks(-1));
             var overdue = appointmentRepo.GetOverdueAlerts();
+            var todayList = mapper.Map<List<AppointmentDTO>>(today);
 
-            return new DashboardDTO
-            {
-                TotalDoctors = doctorRepo.Get().Count,
-                TotalPatients = patientRepo.Get().Count,
-                TodayAppointments = today.Count,
-                OverdueAppointments = overdue.Count,
-                TodayList = mapper.Map<List<AppointmentDTO>>(today)
-            };
+            var dashboard = new DashboardDTO();
+            dashboard.TotalDoctors = doctorRepo.Get().Count;
+            dashboard.TotalPatients = patientRepo.Get().Count;
+            dashboard.TodayAppointments = today.Count;
+            dashboard.OverdueAppointments = overdue.Count;
+            dashboard.TodayList = todayList;
+
+            return dashboard;
         }
 
         private void CheckAppointment(AppointmentDTO dto, int? ignoreId)

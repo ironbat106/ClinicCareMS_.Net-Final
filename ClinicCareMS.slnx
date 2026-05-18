@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/DB/">
+    <File Path="../../../../Documents/SQL Server Management Studio/DAC Packages/ClinicCareDb.bacpac" />
+  </Folder>
   <Project Path="BLL/BLL.csproj" />
   <Project Path="DAL/DAL.csproj" />
   <Project Path="MVCApp/MVCApp.csproj" />
