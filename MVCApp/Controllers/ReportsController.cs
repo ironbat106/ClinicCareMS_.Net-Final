@@ -17,12 +17,14 @@ namespace MVCApp.Controllers
             this.doctorService = doctorService;
         }
 
+        [HttpGet]
         public IActionResult AppointmentReport(DateTime? fromDate, DateTime? toDate)
         {
             var data = appointmentService.GetReport(fromDate, toDate);
             return View(data);
         }
 
+        [HttpGet]
         public IActionResult DoctorSchedule(int? doctorId, DateTime? date)
         {
             ViewBag.DoctorId = new SelectList(doctorService.GetActive(), "DoctorId", "Name", doctorId);
@@ -37,6 +39,7 @@ namespace MVCApp.Controllers
             return View(data);
         }
 
+        [HttpGet]
         public IActionResult OverdueAlerts()
         {
             var data = appointmentService.GetOverdueAlerts();

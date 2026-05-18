@@ -29,11 +29,11 @@ namespace MVCApp.Controllers
                     var user = service.Login(dto);
                     var uType = service.GetUserType(user);
 
-                    // Faculty demo style session keys
+                    
                     HttpContext.Session.SetString("Uname", user.UserName);
                     HttpContext.Session.SetInt32("UType", uType);
 
-                    // Existing ClinicCareMS session keys, used by layout and filters
+                    
                     HttpContext.Session.SetInt32("UserId", user.UserId);
                     HttpContext.Session.SetString("UserName", user.UserName);
                     HttpContext.Session.SetString("FullName", user.FullName);

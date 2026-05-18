@@ -1,5 +1,4 @@
 using BLL.Services;
-using DAL;
 using DAL.Repos;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +12,12 @@ builder.Services.AddDbContext<ClinicCareDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConn")));
 
 
-// DAL repositories and factory
+
 builder.Services.AddScoped<AppUserRepo>();
 builder.Services.AddScoped<DoctorRepo>();
 builder.Services.AddScoped<PatientRepo>();
 builder.Services.AddScoped<AppointmentRepo>();
-builder.Services.AddScoped<DataAccessFactory>();
 
-// BLL services
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<DoctorService>();
 builder.Services.AddScoped<PatientService>();
